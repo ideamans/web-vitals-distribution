@@ -1,13 +1,13 @@
 {
   "name": "web-vitals-distribution",
-  "description": "A starter template for Node.js TypeScript projects",
+  "description": "Probability Distribution Utility for Web Vitals",
   "version": "0.1.0",
   "type": "module",
   "typings": "build/index.d.ts",
   "module": "build/index.js",
   "license": "MIT",
   "engines": {
-    "node": ">=20"
+    "node": ">=18"
   },
   "scripts": {
     "build": "tsc",
