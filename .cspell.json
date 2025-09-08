@@ -7,7 +7,9 @@
     "erfcinv",
     "erfinv",
     "lognormal",
-    "ttfb"
+    "ttfb",
+    "Contentful",
+    "Plotly"
   ],
   "flagWords": [],
   "ignorePaths": [

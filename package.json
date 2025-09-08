@@ -1,7 +1,7 @@
 {
   "name": "web-vitals-distribution",
   "description": "Probability Distribution Utility for Web Vitals",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "module",
   "typings": "build/index.d.ts",
   "module": "build/index.js",
