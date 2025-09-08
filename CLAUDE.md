@@ -47,7 +47,8 @@ yarn watch
    - 統計量の計算（平均、中央値、最頻値）
 
 2. **Web Vitals サポート** (`src/web-vitals.ts`)
-   - 各Web Vitals指標（LCP, INP, CLS, TTFB, FCP, OL, FID）の閾値定義
+   - 各Web Vitals指標（LCP, INP, CLS, TTFB, FCP, OL, FID, RTT）の閾値定義
+   - RTT (Round Trip Time): ネットワーク診断指標（良い: 0-75ms、悪い: 275ms以上）
    - `createWebVitalDistribution`: 良い/悪い割合から対数正規分布モデルを生成
 
 3. **数学ユーティリティ** (`src/two-lines.ts`)
