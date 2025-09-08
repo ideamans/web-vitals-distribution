@@ -5,12 +5,58 @@
   "type": "module",
   "typings": "build/index.d.ts",
   "module": "build/index.js",
+  "main": "build/index.js",
+  "exports": {
+    ".": {
+      "import": "./build/index.js",
+      "types": "./build/index.d.ts"
+    }
+  },
   "license": "MIT",
+  "author": "ideamans",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ideamans/web-vitals-distribution.git"
+  },
+  "homepage": "https://github.com/ideamans/web-vitals-distribution#readme",
+  "bugs": {
+    "url": "https://github.com/ideamans/web-vitals-distribution/issues"
+  },
+  "keywords": [
+    "web-vitals",
+    "core-web-vitals",
+    "lcp",
+    "inp",
+    "cls",
+    "ttfb",
+    "fcp",
+    "fid",
+    "rtt",
+    "crux",
+    "chrome-ux-report",
+    "performance",
+    "distribution",
+    "lognormal",
+    "log-normal",
+    "probability",
+    "statistics",
+    "percentile",
+    "pdf",
+    "cdf"
+  ],
+  "files": [
+    "build",
+    "README.md",
+    "README.ja.md",
+    "LICENSE"
+  ],
   "engines": {
     "node": ">=18"
   },
   "scripts": {
     "build": "tsc",
+    "clean": "rm -rf build",
+    "prebuild": "npm run clean",
     "fix": "run-s fix:*",
     "fix:lint": "eslint --fix",
     "fix:prettier": "prettier --write src",
@@ -19,7 +65,8 @@
     "test:prettier": "prettier src --list-different",
     "test:cspell": "cspell \"{README.md,.github/*.md,src/**/*.ts}\"",
     "test:unit": "nyc --silent ava",
-    "watch": "nyc --silent ava --watch"
+    "watch": "nyc --silent ava --watch",
+    "prepublishOnly": "npm test"
   },
   "devDependencies": {
     "@types/node": "^22.7.4",
