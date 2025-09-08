@@ -29,6 +29,10 @@ const WebVitals: { [metric: string]: { good: number; poor: number } } = {
     good: 100,
     poor: 300,
   },
+  rtt: {
+    good: 75,
+    poor: 275,
+  },
 }
 
 export type WebVitalType = keyof typeof WebVitals
