@@ -12,16 +12,16 @@ npm i web-vitals-distribution
 
 This library supports all major Web Vitals metrics with their respective thresholds:
 
-| Metric | Description | Good | Poor |
-|--------|-------------|------|------|
-| **LCP** | Largest Contentful Paint | < 2500ms | > 4000ms |
-| **INP** | Interaction to Next Paint | < 100ms | > 500ms |
-| **CLS** | Cumulative Layout Shift | < 0.1 | > 0.25 |
-| **TTFB** | Time to First Byte | < 500ms | > 1500ms |
-| **FCP** | First Contentful Paint | < 1500ms | > 2500ms |
-| **OL** | Onload | < 2500ms | > 6500ms |
-| **FID** | First Input Delay | < 100ms | > 300ms |
-| **RTT** | Round Trip Time (Network Diagnostic) | < 75ms | > 275ms |
+| Metric | Description | Good | Poor | Source |
+|--------|-------------|------|------|--------|
+| **TTFB** | Time to First Byte | < 800ms | > 1800ms | [web.dev](https://web.dev/articles/ttfb) |
+| **FCP** | First Contentful Paint | < 1800ms | > 3000ms | [web.dev](https://web.dev/articles/fcp) |
+| **LCP** | Largest Contentful Paint | < 2500ms | > 4000ms | [web.dev](https://web.dev/articles/lcp) |
+| **CLS** | Cumulative Layout Shift | < 0.1 | > 0.25 | [web.dev](https://web.dev/articles/cls) |
+| **INP** | Interaction to Next Paint | < 200ms | > 500ms | [web.dev](https://web.dev/articles/inp) |
+| **FID** | First Input Delay | < 100ms | > 300ms | [web.dev](https://web.dev/articles/fid) |
+| **OL** | Onload | < 2500ms | > 6500ms | [CrUX Dashboard](https://developer.chrome.com/docs/crux/dashboard) |
+| **RTT** | Round Trip Time (Network Diagnostic) | < 75ms | > 275ms | [CrUX Dashboard](https://developer.chrome.com/docs/crux/dashboard) |
 
 ## Usage
 

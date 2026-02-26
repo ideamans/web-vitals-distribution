@@ -6,7 +6,7 @@ const WebVitals: { [metric: string]: { good: number; poor: number } } = {
     poor: 4000,
   },
   inp: {
-    good: 100,
+    good: 200,
     poor: 500,
   },
   cls: {
@@ -14,12 +14,12 @@ const WebVitals: { [metric: string]: { good: number; poor: number } } = {
     poor: 0.25,
   },
   ttfb: {
-    good: 500,
-    poor: 1500,
+    good: 800,
+    poor: 1800,
   },
   fcp: {
-    good: 1500,
-    poor: 2500,
+    good: 1800,
+    poor: 3000,
   },
   ol: {
     good: 2500,
