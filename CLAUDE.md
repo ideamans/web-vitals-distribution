@@ -90,4 +90,4 @@ yarn watch
 - ESLint は 9 に留めている。`eslint-plugin-eslint-comments` が ESLint 10 で動かない（`context.getSourceCode is not a function`）
 - TypeScript は 5 系に留めている（6 は `moduleResolution: Node` を拒否する。7 は typescript-eslint が未対応）
 - 開発ツールが Node 22 以上を要るため CI は 22 / 24 / 26 で回す。ライブラリ本体の `engines` は `>=18` のまま
-- `main` への push で、package.json の版が npm に無ければ公開する（あれば飛ばす）
+- `main` への push で、package.json の版が npm に無ければ Trusted Publishing（OIDC）で**公開待ちに積む**（staged publish。あれば飛ばす）。npmjs.com で 2FA つきの承認をすると公開される（`npm stage approve <id>`）。`NPM_TOKEN` は使わない（2026-11 に失効して `E404 PUT` になった）

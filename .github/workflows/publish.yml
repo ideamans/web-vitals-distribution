@@ -26,15 +26,20 @@ jobs:
     runs-on: ubuntu-latest
     needs: testing
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # npm の Trusted Publishing（OIDC）で公開待ちに積む（staged publish）。トークンの secret は使わない。
+    # npmjs.com のパッケージ設定で、このリポジトリの publish.yml を Trusted Publisher に登録してある前提
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v7
+      # registry-url は付けない。付けると setup-node が NODE_AUTH_TOKEN を参照する npm の設定を書き、
+      # yarn v1 がその未設定の変数で落ちる。OIDC では要らない
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
           node-version: '24.x'
-          # No `cache: yarn` here: with registry-url set, setup-node writes an npm config that
-          # references NODE_AUTH_TOKEN, and `yarn cache dir` fails when that variable is unset.
-          registry-url: 'https://registry.npmjs.org'
+          cache: yarn
       - name: Skip if this version is already on npm
         id: check
         run: |
@@ -47,12 +52,12 @@ jobs:
       - name: Install modules
         if: steps.check.outputs.skip != 'true'
         run: yarn install --frozen-lockfile
-        env:
-          # yarn v1 reads the npm config written by setup-node and fails if NODE_AUTH_TOKEN is unset.
-          # An empty value keeps the real token away from install scripts.
-          NODE_AUTH_TOKEN: ''
-      - name: Publish to npm
+      # Trusted Publishing には npm 11.5.1 以上が要る
+      - name: Update npm
         if: steps.check.outputs.skip != 'true'
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm install -g npm@latest
+      # Trusted Publisher の権限は「stage publish」。ここでは公開待ちに積むだけで、
+      # npmjs.com で 2FA つきの承認をすると公開される（npm stage approve <id> でも可）
+      - name: Stage the release on npm
+        if: steps.check.outputs.skip != 'true'
+        run: npm stage publish . --access public
