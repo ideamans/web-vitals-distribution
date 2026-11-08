@@ -56,8 +56,13 @@ yarn watch
 
 ### 主要な依存関係
 
-- `math-erf`: 誤差関数の計算
-- `math-erfinv`: 逆誤差関数の計算
+- `@stdlib/math-base-special-erf`: 誤差関数の計算
+- `@stdlib/math-base-special-erfinv`: 逆誤差関数の計算
+
+0.3.x までは `math-erf` / `math-erfinv` を使っていたが、0.4.0 で `@stdlib/*` に替えた。
+旧パッケージは実行時の依存に `update-notifier` を抱えており、**利用者の環境に
+`got@5`・`dot-prop@3` などの脆弱な版が入っていた**（`overrides` は利用者に届かないので、依存ごと替えるしかない）。
+`@stdlib/*` は同じ作者が移した後継で、±6 の範囲を細かく刻んで比べた差は erf で 0、erfinv で相対 3e-16。
 
 ## コード規約
 
@@ -76,3 +81,13 @@ yarn watch
 - AVAテストフレームワーク使用
 - テストファイルは `*.spec.ts` 形式
 - NYCでカバレッジ測定
+### 開発用依存の resolutions
+
+`package.json` の `resolutions` は、ava 8（`@vercel/nft`）・nyc 18（`test-exclude`）・typescript-eslint が引く
+`glob` 11〜13 / `minimatch` 10 の moderate（GHSA-3g3m-2fjr-6pw4 / GHSA-g3hv-75wg-m249）を修正版へ逃がすためのもの。
+開発用の依存だけで、公開パッケージの利用者には関係しない。親が修正版を要求するようになったら外す。
+
+- ESLint は 9 に留めている。`eslint-plugin-eslint-comments` が ESLint 10 で動かない（`context.getSourceCode is not a function`）
+- TypeScript は 5 系に留めている（6 は `moduleResolution: Node` を拒否する。7 は typescript-eslint が未対応）
+- 開発ツールが Node 22 以上を要るため CI は 22 / 24 / 26 で回す。ライブラリ本体の `engines` は `>=18` のまま
+- `main` への push で、package.json の版が npm に無ければ公開する（あれば飛ばす）
