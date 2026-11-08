@@ -47,6 +47,10 @@ jobs:
       - name: Install modules
         if: steps.check.outputs.skip != 'true'
         run: yarn install --frozen-lockfile
+        env:
+          # yarn v1 reads the npm config written by setup-node and fails if NODE_AUTH_TOKEN is unset.
+          # An empty value keeps the real token away from install scripts.
+          NODE_AUTH_TOKEN: ''
       - name: Publish to npm
         if: steps.check.outputs.skip != 'true'
         run: npm publish --access public
