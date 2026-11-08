@@ -32,7 +32,8 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: '24.x'
-          cache: yarn
+          # No `cache: yarn` here: with registry-url set, setup-node writes an npm config that
+          # references NODE_AUTH_TOKEN, and `yarn cache dir` fails when that variable is unset.
           registry-url: 'https://registry.npmjs.org'
       - name: Skip if this version is already on npm
         id: check
