@@ -1,5 +1,5 @@
-import Erf from 'math-erf'
-import Erfinv from 'math-erfinv'
+import Erf from '@stdlib/math-base-special-erf'
+import Erfinv from '@stdlib/math-base-special-erfinv'
 
 import { solveTwoLines } from './two-lines.js'
 
