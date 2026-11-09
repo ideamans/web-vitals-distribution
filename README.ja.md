@@ -153,3 +153,8 @@ Web Vitals指標の対数正規分布を作成する。
 - `mean()`: 分布の平均値
 - `median()`: 分布の中央値
 - `mode()`: 分布の最頻値
+
+## リリース（メンテナー向け）
+
+package.json の version を上げてコミットし、`git tag vX.Y.Z && git push origin vX.Y.Z`。
+GitHub Actions が npm の Trusted Publishing（OIDC）で公開する（トークンは使わない）。
