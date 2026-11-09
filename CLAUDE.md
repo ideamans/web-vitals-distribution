@@ -90,4 +90,24 @@ yarn watch
 - ESLint は 9 に留めている。`eslint-plugin-eslint-comments` が ESLint 10 で動かない（`context.getSourceCode is not a function`）
 - TypeScript は 5 系に留めている（6 は `moduleResolution: Node` を拒否する。7 は typescript-eslint が未対応）
 - 開発ツールが Node 22 以上を要るため CI は 22 / 24 / 26 で回す。ライブラリ本体の `engines` は `>=18` のまま
-- `main` への push で、package.json の版が npm に無ければ公開する（あれば飛ばす）
+- npm への公開は `v*` のタグの push で行う（下の「npm への公開」）。`main` への push では公開しない。`NPM_TOKEN` は使わない（2026-11 に失効して `E404 PUT` になった）
+
+## npm への公開
+
+`v*` のタグを push すると `.github/workflows/publish.yml` がテストとビルドのあと npm に**そのまま公開する**
+（承認待ちにしない）。認証は npm の Trusted Publishing（GitHub Actions の OIDC）で、`NPM_TOKEN` などのシークレットは使わない。
+provenance は自動で付く。
+
+```bash
+# package.json の version を上げてコミット・push してから
+git tag vX.Y.Z && git push origin vX.Y.Z
+```
+
+- タグと package.json の version が違えば落ちる。npm に同じ版があれば何もしない
+- プレリリース（`1.2.0-beta.0`）は `latest` ではなく識別子の dist-tag（`beta`）で出る
+- 手元から `npm publish` しない（トークンを置かない）
+- タグを打ち直さずに出し直すときは、Actions の「Publish to npm」を workflow_dispatch で起動する（選んだブランチの package.json の版を出す）
+- PR で `publish.yml` を変えると、公開せずにビルドと `npm pack --dry-run` までが走る
+- package.json の `repository` はこのリポジトリを指すこと。provenance の検証で照合され、違うと公開が `E422` で落ちる（ワークフローが先に検査する）
+- 前提: npmjs.com の `web-vitals-distribution` の設定で、Trusted Publisher に GitHub Actions・`ideamans/web-vitals-distribution`・`publish.yml`・権限 **publish** を登録してあること。
+  stage publish の権限だけだと `npm publish` は `E403 OIDC permission denied` になる
